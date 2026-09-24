@@ -25,8 +25,6 @@ Si el alumno manda solo texto, el bot le pide una foto. Si la foto no muestra un
 - Cuenta de Make.com (zona us2.make.com) con el módulo **Make AI Agent**
 - Bot de Telegram creado con @BotFather (conexión `Ecosistema_bot1`)
 - Proveedor de IA de Make (modelo *Large*: gpt-5-mini)
-- Teléfono celular con Telegram para tomar las fotos en el jardín
-- Computadora con navegador
 
 ## Diagrama del escenario
 
@@ -99,6 +97,7 @@ El reporte técnico de la práctica se encuentra en [Reporte.pdf](Reporte/Report
 |---|---|---|---|
 | Sábila del jardín | Aloe vera | Productor | ✅ |
 | Planta de hojas amarillas/rojas | *Codiaeum variegatum* (croton) | Productor | ✅ |
+| Arbusto de flores rojas | *Punica granatum* (granado) | Productor | ❌ parece ser una Ixora |
 | Mensaje solo de texto | "Envíame una foto del organismo…" | — | ✅ (ruta 2) |
 
 ## Preguntas de reflexión
@@ -113,7 +112,7 @@ Al principio la IA me respondía cosas sin sentido. Por ejemplo, en una foto don
 Conocer qué organismos hay en nuestro entorno y qué función cumplen es el primer paso para cuidarlos. El bot hace que cualquier estudiante pueda aprender sobre la biodiversidad del plantel sin ser experto, y las respuestas se pueden juntar como un inventario de las especies del jardín.
 
 **4. ¿Qué limitaciones tiene usar IA para esto?**
-La IA puede equivocarse, sobre todo con fotos borrosas, organismos muy pequeños o especies parecidas. Por eso sus respuestas deben tomarse como una "identificación probable" y verificarse. Además, cada ejecución consume operaciones (créditos) de Make.
+La IA puede equivocarse, sobre todo con fotos borrosas, organismos muy pequeños o especies parecidas. Me pasó en una prueba: un arbusto de flores rojas, que parece ser una Ixora (cruz de Malta), lo identificó como granado (*Punica granatum*). Por eso sus respuestas deben tomarse como una "identificación probable" y verificarse. Además, cada ejecución consume operaciones (créditos) de Make.
 
 ## Conclusiones
 El escenario cumple su objetivo: recibe una foto por Telegram, la envía a un Agente de IA y responde en pocos segundos con el nombre del organismo, su rol trófico y su función en el ecosistema. El Router con dos filtros evita errores cuando el alumno manda solo texto. La parte más importante fue ajustar las instrucciones del agente, porque la calidad de la respuesta depende de qué tan claro y específico es el *system prompt*.
