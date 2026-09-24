@@ -91,7 +91,7 @@ Pruebas reales con fotos del jardín del Tecnológico:
 | <img src="Diagrama/prueba_aloe_vera.jpg" width="340"> | <img src="Diagrama/prueba_croton.jpg" width="340"> |
 
 ## Reporte
-Incluye: [Reporte de la práctica.pdf](Reporte/Reporte%20de%20la%20práctica.pdf)
+Incluye: [Reporte de la práctica.pdf](Reporte/Reporte%20de%20la%20pr%E2%94%9C%C3%ADctica.pdf)
 
 - Descripción del escenario módulo por módulo
 - Filtros del Router
