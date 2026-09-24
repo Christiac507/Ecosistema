@@ -81,7 +81,7 @@ Reglas estrictas:
 ## Video del funcionamiento
 [enlace.txt](Video/enlace.txt)
 
-[Ver video en YouTube](VIDEO_URL)
+[Ver video en YouTube](https://youtube.com/shorts/WUeGnCaVDFM)
 
 ## Evidencias de armado
 Pruebas reales con fotos del jardín del Tecnológico:
