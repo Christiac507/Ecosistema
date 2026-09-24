@@ -34,10 +34,6 @@ Escenario completo en Make.com:
 
 <img src="Diagrama/escenario_make.png" width="700">
 
-Flujo con los filtros del Router:
-
-<img src="Diagrama/diagrama_flujo_filtros.png" width="700">
-
 | # | Módulo | Función |
 |---|--------|---------|
 | 1 | Telegram Bot — Watch Updates | Disparador: recibe cada mensaje enviado al bot (webhook) |
