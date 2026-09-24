@@ -1,0 +1,598 @@
+{
+    "name": "Integration Telegram Bot",
+    "flow": [
+        {
+            "id": 1,
+            "module": "telegram:WatchUpdates",
+            "version": 1,
+            "parameters": {
+                "__IMTHOOK__": 2832372
+            },
+            "mapper": {},
+            "metadata": {
+                "designer": {
+                    "x": 0,
+                    "y": 0
+                },
+                "setupValidation": {
+                    "result": {
+                        "valid": true,
+                        "fields": []
+                    },
+                    "version": 1,
+                    "configuration": "d1b7b7a98705120b"
+                },
+                "restore": {
+                    "parameters": {
+                        "__IMTHOOK__": {
+                            "data": {
+                                "editable": "false"
+                            },
+                            "label": "Ecosistemas"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTHOOK__",
+                        "type": "hook:telegramapi",
+                        "label": "Webhook",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        {
+            "id": 2,
+            "module": "builtin:BasicRouter",
+            "version": 1,
+            "mapper": null,
+            "metadata": {
+                "designer": {
+                    "x": 300,
+                    "y": 0
+                }
+            },
+            "routes": [
+                {
+                    "flow": [
+                        {
+                            "id": 3,
+                            "module": "telegram:DownloadFile",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 11186225
+                            },
+                            "filter": {
+                                "name": "",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{1.message.photo}}",
+                                            "o": "exist"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": {
+                                "fileId": "{{1.message.photo[].file_id}}"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 481,
+                                    "y": 391
+                                },
+                                "setupValidation": {
+                                    "result": {
+                                        "valid": true,
+                                        "fields": []
+                                    },
+                                    "version": 1,
+                                    "configuration": "c5e5e8980d6844d7"
+                                },
+                                "restore": {
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "telegram"
+                                            },
+                                            "label": "Ecosistema_bot1"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:telegram",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "fileId",
+                                        "type": "text",
+                                        "label": "File ID",
+                                        "required": true
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 13,
+                            "module": "ai-local-agent:RunLocalAIAgent",
+                            "version": 0,
+                            "parameters": {
+                                "makeConnectionId": 10624849
+                            },
+                            "mapper": {
+                                "defaultModel": "large",
+                                "tokenLimit": "50",
+                                "promptCaching": "none",
+                                "fallbackEnabled": false,
+                                "systemPrompt": "Eres un asistente educativo que identifica organismos en fotos tomadas\npor estudiantes en el jardín del Tecnológico, para la materia de\nDesarrollo Sustentable, tema \"El Ecosistema\".\n\nCuando recibas una imagen, responde SIEMPRE en este formato, sin texto\nadicional antes o después:\n\n🔎 [nombre común o científico más probable del organismo, lo más\nespecífico posible: especie o género, no solo \"planta\" o \"insecto\"]\n🌱 [Productor / Consumidor / Descomponedor]\n♻️ [rol en el ecosistema en máximo 15 palabras]\n\nSi dudas entre dos especies parecidas, elige la más probable según\ncaracterísticas visibles (forma de hoja, color, tamaño, textura) y\nmenciónala igual sin usar términos genéricos.\n\nSi la imagen no muestra un organismo vivo, responde únicamente:\n\"❌ No identifico un organismo. Intenta con una planta, insecto u otro\nser vivo.\"\n\nReglas estrictas:\n- Máximo 35 palabras en total.\n- Sin introducciones, sin despedidas, sin explicaciones extra.\n- Responde siempre en español.",
+                                "message": "Analiza la imagen adjunta siguiendo tus instrucciones.",
+                                "files": [
+                                    {
+                                        "fileName": "{{3.fileName}}",
+                                        "data": "{{3.fileOutput}}"
+                                    }
+                                ],
+                                "threadId": "",
+                                "modelConfig": {
+                                    "recursionLimit": "300",
+                                    "iterationsFromHistoryCount": "10",
+                                    "timeout": ""
+                                },
+                                "outputType": "text"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 643,
+                                    "y": 20
+                                },
+                                "setupValidation": {
+                                    "version": 1,
+                                    "configuration": "e0f4569dc7ba45c4",
+                                    "result": {
+                                        "valid": true,
+                                        "fields": []
+                                    }
+                                },
+                                "restore": {
+                                    "parameters": {
+                                        "makeConnectionId": {
+                                            "label": "Make's AI Provider (default)",
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "ai-provider"
+                                            }
+                                        }
+                                    },
+                                    "expect": {
+                                        "defaultModel": {
+                                            "mode": "chose",
+                                            "label": "Large (Paid plans only)Model: gpt-5-mini. Reasoning: low. Powerful model built for complex logic puzzles and high-level reasoning tasks"
+                                        },
+                                        "promptCaching": {
+                                            "label": "Automatic (always on)"
+                                        },
+                                        "files": {
+                                            "mode": "chose",
+                                            "items": [
+                                                null
+                                            ]
+                                        },
+                                        "outputType": {
+                                            "label": "Text"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "makeConnectionId",
+                                        "type": "account:ai-provider,openai-gpt-3,anthropic-claude,gemini-ai-q9zyjp,ai-agent-foundry-openai,ai-agent-foundry-non-openai,mistral-ai,cohere,groq,ai-agent-xai,amazon-bedrock,ai-agent-openai-compatible",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "defaultModel",
+                                        "type": "select",
+                                        "label": "Model",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "tokenLimit",
+                                        "type": "number",
+                                        "label": "Maximum output length (%)",
+                                        "validate": {
+                                            "min": 20,
+                                            "max": 100
+                                        }
+                                    },
+                                    {
+                                        "name": "promptCaching",
+                                        "type": "select",
+                                        "label": "Prompt caching",
+                                        "validate": {
+                                            "enum": [
+                                                "none"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "fallbackEnabled",
+                                        "type": "boolean",
+                                        "label": "Enable fallback connection",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "systemPrompt",
+                                        "type": "text",
+                                        "label": "Instructions"
+                                    },
+                                    {
+                                        "name": "message",
+                                        "type": "text",
+                                        "label": "Input",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "files",
+                                        "type": "array",
+                                        "label": "Input files",
+                                        "spec": [
+                                            {
+                                                "name": "fileName",
+                                                "type": "filename",
+                                                "label": "File name",
+                                                "semantic": "file:name"
+                                            },
+                                            {
+                                                "name": "data",
+                                                "type": "buffer",
+                                                "label": "Data",
+                                                "semantic": "file:data"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "name": "threadId",
+                                        "type": "text",
+                                        "label": "Conversation ID",
+                                        "validate": {
+                                            "max": 256
+                                        }
+                                    },
+                                    {
+                                        "name": "modelConfig",
+                                        "type": "collection",
+                                        "label": "Model configuration",
+                                        "spec": [
+                                            {
+                                                "name": "recursionLimit",
+                                                "type": "number",
+                                                "label": "Steps per agent call"
+                                            },
+                                            {
+                                                "name": "iterationsFromHistoryCount",
+                                                "type": "number",
+                                                "label": "Maximum conversation history"
+                                            },
+                                            {
+                                                "name": "timeout",
+                                                "type": "number",
+                                                "label": "Step timeout",
+                                                "validate": {
+                                                    "min": 120,
+                                                    "max": 600
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "name": "outputType",
+                                        "type": "select",
+                                        "label": "Response format",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": [
+                                                "text",
+                                                "make-schema",
+                                                "udt-schema"
+                                            ]
+                                        }
+                                    }
+                                ]
+                            },
+                            "tools": []
+                        },
+                        {
+                            "id": 15,
+                            "module": "telegram:SendReplyMessage",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 11186225
+                            },
+                            "mapper": {
+                                "text": "{{13.response}}",
+                                "chatId": "{{1.message.chat.id}}",
+                                "parseMode": "",
+                                "replyMarkup": "",
+                                "messageThreadId": "",
+                                "replyToMessageId": "",
+                                "replyMarkupAssembleType": "reply_markup_enter"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 943,
+                                    "y": 20
+                                },
+                                "setupValidation": {
+                                    "result": {
+                                        "valid": true,
+                                        "fields": []
+                                    },
+                                    "version": 1,
+                                    "configuration": "99b2f39d0688d87f"
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "parseMode": {
+                                            "label": "Empty"
+                                        },
+                                        "disableNotification": {
+                                            "mode": "chose"
+                                        },
+                                        "replyMarkupAssembleType": {
+                                            "label": "Enter the Reply Markup"
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "telegram"
+                                            },
+                                            "label": "Ecosistema_bot1"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:telegram",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "chatId",
+                                        "type": "text",
+                                        "label": "Chat ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "text",
+                                        "type": "text",
+                                        "label": "Text",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "messageThreadId",
+                                        "type": "number",
+                                        "label": "Message Thread ID"
+                                    },
+                                    {
+                                        "name": "parseMode",
+                                        "type": "select",
+                                        "label": "Parse Mode",
+                                        "validate": {
+                                            "enum": [
+                                                "Markdown",
+                                                "HTML"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "disableNotification",
+                                        "type": "boolean",
+                                        "label": "Disable Notifications"
+                                    },
+                                    {
+                                        "name": "disableWebPagePreview",
+                                        "type": "boolean",
+                                        "label": "Disable Link Previews"
+                                    },
+                                    {
+                                        "name": "replyToMessageId",
+                                        "type": "number",
+                                        "label": "Original Message ID"
+                                    },
+                                    {
+                                        "name": "replyMarkupAssembleType",
+                                        "type": "select",
+                                        "label": "Enter/Assemble the Reply Markup Field",
+                                        "validate": {
+                                            "enum": [
+                                                "reply_markup_enter",
+                                                "reply_markup_assemble"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "replyMarkup",
+                                        "type": "text",
+                                        "label": "Reply Markup"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "flow": [
+                        {
+                            "id": 10,
+                            "module": "telegram:SendReplyMessage",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 11186225
+                            },
+                            "filter": {
+                                "name": "",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{1.message.photo}}",
+                                            "o": "notexist"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": {
+                                "text": "Envíame una foto del organismo (planta, insecto, hongo, etc.) para poder\r\n\r\nidentificarlo",
+                                "chatId": "{{1.message.chat.id}}",
+                                "parseMode": "",
+                                "replyMarkup": "",
+                                "messageThreadId": "",
+                                "replyToMessageId": "",
+                                "replyMarkupAssembleType": "reply_markup_enter"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 108,
+                                    "y": 390
+                                },
+                                "setupValidation": {
+                                    "result": {
+                                        "valid": true,
+                                        "fields": []
+                                    },
+                                    "version": 1,
+                                    "configuration": "5ee51e49361289bf"
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "parseMode": {
+                                            "label": "Empty"
+                                        },
+                                        "disableNotification": {
+                                            "mode": "chose"
+                                        },
+                                        "replyMarkupAssembleType": {
+                                            "label": "Enter the Reply Markup"
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "telegram"
+                                            },
+                                            "label": "Ecosistema_bot1"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:telegram",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "chatId",
+                                        "type": "text",
+                                        "label": "Chat ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "text",
+                                        "type": "text",
+                                        "label": "Text",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "messageThreadId",
+                                        "type": "number",
+                                        "label": "Message Thread ID"
+                                    },
+                                    {
+                                        "name": "parseMode",
+                                        "type": "select",
+                                        "label": "Parse Mode",
+                                        "validate": {
+                                            "enum": [
+                                                "Markdown",
+                                                "HTML"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "disableNotification",
+                                        "type": "boolean",
+                                        "label": "Disable Notifications"
+                                    },
+                                    {
+                                        "name": "disableWebPagePreview",
+                                        "type": "boolean",
+                                        "label": "Disable Link Previews"
+                                    },
+                                    {
+                                        "name": "replyToMessageId",
+                                        "type": "number",
+                                        "label": "Original Message ID"
+                                    },
+                                    {
+                                        "name": "replyMarkupAssembleType",
+                                        "type": "select",
+                                        "label": "Enter/Assemble the Reply Markup Field",
+                                        "validate": {
+                                            "enum": [
+                                                "reply_markup_enter",
+                                                "reply_markup_assemble"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "replyMarkup",
+                                        "type": "text",
+                                        "label": "Reply Markup"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "metadata": {
+        "instant": true,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false,
+            "freshVariables": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "us2.make.com",
+        "notes": []
+    }
+}
