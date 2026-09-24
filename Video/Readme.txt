@@ -1,1 +1,1 @@
-VIDEO_URL
+https://youtube.com/shorts/WUeGnCaVDFM
